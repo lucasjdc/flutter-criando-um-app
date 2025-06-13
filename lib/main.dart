@@ -78,21 +78,20 @@ class Editor extends StatelessWidget {
 }
 
 class ListaTransferencias extends StatefulWidget {
+  final List<Transferencia> _transferencias = [];
   @override
   _ListaTransferenciasState createState() => _ListaTransferenciasState();
 }
 
 class _ListaTransferenciasState extends State<ListaTransferencias> {
-  final List<Transferencia> _transferencias = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Transferências')),
       body: ListView.builder(
-        itemCount: _transferencias.length,
+        itemCount: widget._transferencias.length,
         itemBuilder: (context, indice) {
-          final transferencia = _transferencias[indice];
+          final transferencia = widget._transferencias[indice];
           return ItemTransferencia(transferencia);
         },
       ),
@@ -114,7 +113,7 @@ class _ListaTransferenciasState extends State<ListaTransferencias> {
               // Atualiza o estado da tela com a nova transferência.
               setState(() {
                 // Adiciona a nova transferência à lista.
-                _transferencias.add(transferenciaRecebida);
+                widget._transferencias.add(transferenciaRecebida);
               });
             }
           });
