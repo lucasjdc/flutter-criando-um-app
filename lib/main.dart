@@ -77,17 +77,24 @@ class Editor extends StatelessWidget {
   }
 }
 
-class ListaTransferencias extends StatelessWidget {
+class ListaTransferencias extends StatefulWidget {
+  @override
+  _ListaTransferenciasState createState() => _ListaTransferenciasState();
+}
+
+class _ListaTransferenciasState extends State<ListaTransferencias> {
+  final List<Transferencia> _transferencias = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Transferências')),
-      body: Column(
-        children: [
-          ItemTransferencia(Transferencia(1.51, 1000)),
-          ItemTransferencia(Transferencia(3.25, 1001)),
-          ItemTransferencia(Transferencia(7.25, 1002)),
-        ],
+      body: ListView.builder(
+        itemCount: _transferencias.length,
+        itemBuilder: (context, indice) {
+          final transferencia = _transferencias[indice];
+          return ItemTransferencia(transferencia);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -96,13 +103,20 @@ class ListaTransferencias extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
+                // Constrói e mostra a tela de formulário.
                 return FormularioTransferencia();
               },
             ),
           );
           future.then((transferenciaRecebida) {
-            debugPrint('chegou no then do future');
-            debugPrint('$transferenciaRecebida');
+            // Verifica se a transferência foi realmente criada e retornada.
+            if (transferenciaRecebida != null) {
+              // Atualiza o estado da tela com a nova transferência.
+              setState(() {
+                // Adiciona a nova transferência à lista.
+                _transferencias.add(transferenciaRecebida);
+              });
+            }
           });
         },
       ),
