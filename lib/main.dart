@@ -5,7 +5,31 @@ void main() => runApp(ByteBankApp());
 class ByteBankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Scaffold(body: ListaTransferencias()));
+    return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        primaryColor: Colors.green[900],
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.blueAccent[700],
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.green[900],
+          foregroundColor: Colors.white,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blueAccent[700],
+            foregroundColor: Colors.white,
+            textStyle: TextStyle(fontSize: 16),
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          shape: CircleBorder(),
+        ),
+      ),
+      home: ListaTransferencias(),
+    );
   }
 }
 
@@ -103,6 +127,7 @@ class _ListaTransferenciasState extends State<ListaTransferencias> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        // tinha que ser redondo esse Button
         child: Icon(Icons.add),
         onPressed: () {
           final Future<Transferencia?> future = Navigator.push(
